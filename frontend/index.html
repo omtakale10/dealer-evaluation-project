@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>Select Product</h2>
+
+<select id="products"></select>
+<ul id="dealers"></ul>
+
+<script>
+
+const PRODUCT_API = "PASTE_PRODUCT_URL";
+const DEALER_API = "PASTE_DEALER_URL";
+
+fetch(PRODUCT_API)
+.then(res => res.json())
+.then(data => {
+    let dropdown = document.getElementById("products");
+    data.forEach(p => {
+        let option = document.createElement("option");
+        option.text = p;
+        dropdown.add(option);
+    });
+});
+
+document.getElementById("products").onchange = function() {
+    let product = this.value;
+
+    fetch(DEALER_API + "/" + product)
+    .then(res => res.json())
+    .then(data => {
+        let list = document.getElementById("dealers");
+        list.innerHTML = "";
+
+        data.forEach(d => {
+            let li = document.createElement("li");
+            li.textContent = d.name + " - ₹" + d.price;
+            list.appendChild(li);
+        });
+    });
+};
+
+</script>
+
+</body>
+</html>
