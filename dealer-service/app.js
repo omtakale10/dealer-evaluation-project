@@ -12,4 +12,5 @@ app.get('/dealers/:product', (req, res) => {
   res.json(dealers[req.params.product] || []);
 });
 
-app.listen(3000, () => console.log("Running"));
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log("Running"));
